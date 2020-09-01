@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main">
+        <form action="" method="POST" class="form" id="form-1">
+            <h3 class="heading">Thành viên đăng ký</h3>
+            <p class="desc">Đây là library của formValidation </p>
+            <div class="spacer"></div>
+            <div class="form-group">
+                <label for="fullname" class="form-label">Tên đầy đủ</label>
+                <input id="fullname" class="form-control" name="fullname" type="text" placeholder="VD: Trung Duc">
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input id="email" class="form-control" name="email" type="email" placeholder="VD: ducbn2001@gmail.com">
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input id="password" class="form-control" name="password" type="password" placeholder="Nhập mật khẩu">
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="password-confirmation" class="form-label">Nhập lại mật khẩu</label>
+                <input id="password-confirmation" class="form-control" name="password-confirmation" type="password" placeholder="Nhập lại mật khẩu">
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="avatar" class="form-label">Ảnh đại diện</label>
+                <input id="avatar" class="form-control" name="avatar" type="file" >
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="province" class="form-label">Tỉnh/TP</label>
+                <select id="province" name="province" name="province" class="form-control">
+                    <option value="">--Chọn Tỉnh/Tp--</option>
+                    <option value="hnoi">--Hà Nội--</option>
+                    <option value="binh">--Bắc Ninh--</option>
+                </select>
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="gender" class="form-label">Giới tính</label>
+                <input  name="gender" class="form-control" value="male" type="radio" >Nam
+                <input  name="gender" class="form-control" value="female" type="radio" >Nữ
+                <input  name="gender" class="form-control" value="other" type="radio" >Khác
+                <span class="form-message"></span>
+            </div>
+            <button class='form-submit'>Đăng ký</button>
+        </form>
+    </div>
+    <script src="validator.js"></script>
+    <script>
+        Validator({
+            form:'#form-1',
+            formGroupSelector: '.form-group',
+            errorSelector:'.form-message',
+            rules:[
+                Validator.isRequired('#fullname','Vui lòng nhập tên đầy đủ của bạn'),
+                Validator.isEmail('#email','Email không chính xác'),
+                Validator.isRequired('#avatar'),
+                Validator.minLength('#password', 6),
+                Validator.isRequired('#password-confirmation'),
+                Validator.isRequired('input[name="gender"]'),
+                Validator.isRequired('#province'),
+                Validator.isConfirmed('#password-confirmation',function(){
+                    return document.querySelector('#form-1 #password').value;
+                },'Mật khẩu nhập lại không chính xác')
+            ],
+            onSubmit: function (data) {
+                // call Api
+                console.log(data);
+            }
+        });
+    </script>
+</body>
+</html>
